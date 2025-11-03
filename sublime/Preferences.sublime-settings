@@ -1,0 +1,9 @@
+{
+	"ignored_packages":
+	[
+		"Vintage",
+	],
+	"color_scheme": "Packages/Material Theme/schemes/Material-Theme-Palenight.tmTheme",
+	"theme": "Adaptive.sublime-theme",
+	"font_size": 12,
+}

@@ -1,0 +1,106 @@
+{
+  "template": {
+    "prefix": "template",
+    "body": [
+      "#include <bits/stdc++.h>",
+      "using namespace std;",
+      "",
+      "int main() {",
+      "    cin.tie(nullptr)->sync_with_stdio(false);",
+      "",
+      "    return 0;",
+      "}"
+    ],
+    "description": "cp template"
+  },
+  "qtemplate": {
+    "prefix": "qtemplate",
+    "body": [
+      "#include <bits/stdc++.h>",
+      "using namespace std;",
+      "",
+      "void solve() {",
+      "    ",
+      "}",
+      "",
+      "int main() {",
+      "    ios::sync_with_stdio(false);",
+      "    cin.tie(0);",
+      "    int t;",
+      "    cin >> t;",
+      "    while (t--)",
+      "        solve();",
+      "    return 0;",
+      "}"
+    ],
+    "description": "cp multi-template"
+  },
+  "google": {
+    "prefix": "google",
+    "body": [
+      "#include <bits/stdc++.h>",
+      "using namespace std;",
+      "",
+      "void solve() {}",
+      "",
+      "",
+      "int main() {",
+      "    cin.tie(nullptr)->sync_with_stdio(false);",
+      "    int t;",
+      "    cin >> t;",
+      "    for (int i = 1; i <= t; i++) {",
+      "        cout << \"Case #\" << i << \": \";",
+      "        solve();",
+      "    }",
+      "}"
+    ],
+    "description": "google/meta snippet"
+  },
+  "fact": {
+    "prefix": "fact",
+    "body": [
+      "vector<long long> fact(n + 1); // def long long",
+      "fact[0] = 1;",
+      "for (int i = 1; i <= n; i++)",
+      "    fact[i] = (fact[i - 1] * i) % MOD;",
+      "",
+      "auto modpow = [&](long long a, long long b) {",
+      "    long long res = 1;",
+      "    while (b) {",
+      "        if (b & 1) res = (res * a) % MOD;",
+      "        a = (a * a) % MOD;",
+      "        b >>= 1;",
+      "    }",
+      "    return res;",
+      "};",
+      "",
+      "vector<long long> inv(n + 1);",
+      "for (int i = 0; i <= n; i++)",
+      "    inv[i] = modpow(fact[i], MOD - 2);",
+      "",
+      "auto nCk = [&](long long n, long long k) -> long long {",
+      "    return (n < k ?",
+      "    0 : ((fact[n] * inv[n - k]) % MOD * inv[k]) % MOD);",
+      "};",
+      "",
+      "auto nPk = [&](long long n, long long k) -> long long {",
+      "    return (n < k ?",
+      "    0 : (fact[n] * inv[n - k]) % MOD);",
+      "};"
+    ],
+    "description": "combo (factorials, inv, nCk, nPk)"
+  },
+  "grid_directions": {
+    "prefix": "grid_directions",
+    "body": [
+      "const int dx[] = {-1, 0, 1, 0, -1, 1, 1, -1};",
+      "const int dy[] = {0, 1, 0, -1, -1, 1, -1, 1};",
+      "",
+      "auto in = [&](int x, int y) {",
+      "    return (x >= 0 && x < n && y >= 0 && y < m);",
+      "};"
+    ],
+    "description": "grid directions"
+  }
+}
+
