@@ -20,7 +20,9 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
+-- ---------------------------
 -- clang-format based indentation
+-- ---------------------------
 local function parse_clang_format_dump(lines)
   -- lines: table of strings from clang-format -dump-config
   local indent_width, tab_width, use_tab
@@ -136,65 +138,4 @@ vim.api.nvim_create_autocmd("FileType", {
       )
     end, { buffer = true, noremap = true, silent = true })
   end,
-})
-
--- Toggle diagnostic *display* (virtual_text / signs / underline) with F1
-local _diag_display_hidden = false
-local _diag_saved_config = nil
-
-local function toggle_diagnostic_display()
-  if type(vim.diagnostic) ~= "table" or type(vim.diagnostic.config) ~= "function" then
-    vim.notify("vim.diagnostic.config not available in this Neovim build", vim.log.levels.ERROR)
-    return
-  end
-
-  -- If we haven't saved the "on" config yet, use the values you currently set in init.lua.
-  -- There's no official getter for the current config, so we store the expected defaults here.
-  if _diag_saved_config == nil then
-    _diag_saved_config = {
-      virtual_text = { prefix = "●", spacing = 2 },
-      signs = true,
-      underline = true,
-      update_in_insert = false,
-      severity_sort = true,
-    }
-  end
-
-  if not _diag_display_hidden then
-    -- hide visual diagnostic elements (global)
-    pcall(vim.diagnostic.config, {
-      virtual_text = false,
-      signs = false,
-      underline = false,
-      update_in_insert = false, -- keep this false; doesn't matter when hidden
-      severity_sort = _diag_saved_config.severity_sort,
-    })
-    -- try to force a refresh (some neovim versions auto-redraw)
-    pcall(function()
-      vim.diagnostic.refresh()
-    end)
-    _diag_display_hidden = true
-    vim.notify("Diagnostic display: hidden", vim.log.levels.WARN)
-  else
-    -- restore saved config
-    pcall(vim.diagnostic.config, _diag_saved_config)
-    pcall(function()
-      vim.diagnostic.refresh()
-    end)
-    _diag_display_hidden = false
-    vim.notify("Diagnostic display: shown", vim.log.levels.INFO)
-  end
-end
-
-vim.keymap.set("n", "<F1>", toggle_diagnostic_display, { noremap = true, silent = true })
-
-vim.diagnostic.config({
-  virtual_text = {
-    prefix = "●", -- a small marker before the message (optional)
-    spacing = 2,
-  },
-  signs = true, -- show icons in the sign column
-  underline = true, -- underline problem ranges
-  update_in_insert = false, -- don't spam while inserting
-  severity_sort = true,
 })
