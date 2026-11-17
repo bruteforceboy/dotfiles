@@ -1,0 +1,11 @@
+{
+  "model": "opus",
+  "theme": "dark",
+  "switchModelsOnFlag": true,
+  "permissions": {
+    "deny": [
+      "Bash(git push *)",
+      "Bash(gh *)"
+    ]
+  }
+}
